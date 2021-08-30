@@ -1,1 +1,1 @@
-# javascript-rpg
+This is a Javascript RPG. In this game you play as Hercules. You are tasked by King Eurystheus to slay the impossible nine-headed Lernaean Hydra and capture the guard dog of the underworld, Cerberus.

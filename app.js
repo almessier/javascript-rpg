@@ -1,19 +1,19 @@
 'use strict'
 
 const hercules = {
-    name: 'Hercules',
+    name : 'Hercules',
     health : 150,
     attackPower : 15,
     attacks : ['Swift Slash', 'Vicious Thrust', 'Hilt Bash', 'Leaping Slam']
 }
 const nemeanLion = {
-    name: 'Nemean Lion',
+    name : 'Nemean Lion',
     health : 135,
     attackPower : 15,
     attacks : ['Piercing Claws', 'Armored Pounce', 'Vicious Chomp']
 }
 const lernaeanHydra = {
-    name: 'Lernaean Hydra',
+    name : 'Lernaean Hydra',
     health : 60,
     attackPower : 30,
     attacks : ['Serpentine Strike', 'Poisonous Fumes', 'Venomous Bite', 'Tail Whip', 'Constriction']
@@ -25,7 +25,7 @@ const hades = {
     attacks : ['Titanic Slam', 'Bident Thrust']
 }
 
-playGame(hercules, nemeanLion, lernaeanHydra);
+playGame(hercules, nemeanLion, lernaeanHydra, hades);
 
 function playGame(user, enemy1, enemy2, enemy3) {
     alert('Welcome! In this game you play as Hercules. You are tasked by King Eurystheus to slay the impossible nine-headed Lernaean Hydra and capture the guard dog of the underworld, Cerberus.');
@@ -38,19 +38,20 @@ function playGame(user, enemy1, enemy2, enemy3) {
     alert('After being defeated, Hades allows you to take Cerberus. King Eurystheus is satisfied with your labors. You have won!');
 }
 function promptAttack() {
-    let attack = prompt('Type 1, 2, 3, or 4 to attack: 1. Swift Slash, 2. Vicious Thrust, 3. Hilt Bash, 4. Leaping Slam');
-    return attack;
+    let attackSelection = prompt('Type 1, 2, 3, or 4 to attack: 1. Swift Slash, 2. Vicious Thrust, 3. Hilt Bash, 4. Leaping Slam');
+    attackSelection = parseInt(attackSelection, 10);
+    return attackSelection;
 }
 function returnAttackName(array, attack) {
     for (let i = 0; i < array.length; i++) {
-        if (attack == array.indexOf(array[i])) {
+        if (attack - 1 == array.indexOf(array[i])) {
             return array[i];
         }
     }
 }
 function returnEnemyAttackName(array) {
-    let attack = Math.floor(Math.random() * Math.floor(array.length));
-    return array[attack];
+    let enemyAttackSelection = Math.floor(Math.random() * Math.floor(array.length));
+    return array[enemyAttackSelection];
 }
 function attack(user, enemy) {
     let health = user.health;
@@ -59,12 +60,16 @@ function attack(user, enemy) {
     let enemyAttackPower = enemy.attackPower;
     while (health > 0 && enemyHealth > 0){
         let attack = promptAttack();
-        let attackName = returnAttackName(user.attacks, attack);
-        let enemyAttackName = returnEnemyAttackName(enemy.attacks);
-        enemyHealth -= attackPower;
-        console.log(`You have dealt ${attackPower} damage to the ${enemy.name} with ${attackName}. It now has ${enemyHealth} health.`);
-        health -= enemyAttackPower;
-        console.log(`${enemy.name} has dealt ${enemyAttackPower} damage to you with ${enemyAttackName}. You now have ${health} health.`);
+        if (attack > 0 && attack < 5){
+            let attackName = returnAttackName(user.attacks, attack);
+            let enemyAttackName = returnEnemyAttackName(enemy.attacks);
+            enemyHealth -= attackPower;
+            console.log(`You have dealt ${attackPower} damage to the ${enemy.name} with ${attackName}. It now has ${enemyHealth} health.`);
+            health -= enemyAttackPower;
+            console.log(`${enemy.name} has dealt ${enemyAttackPower} damage to you with ${enemyAttackName}. You now have ${health} health.`);
+        } else {
+            alert('Invalid input, try again.');
+        }
     }
     if (health > 0) {
         alert('Enemy Defeated!');
